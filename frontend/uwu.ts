@@ -51,14 +51,17 @@ class Metro {
   }
 
   enqueue(track: Track): void {
-    const history = document.getElementById("history")!;
-    const dd = document.createElement("dd");
-    dd.innerText = `${track.artist} - ${track.title}`;
-    history.insertBefore(dd, history.firstChild);
-    const dt = document.createElement("dt");
-    const trackTime = new Date(track.playbackStartUnixMillis);
-    dt.innerText = new Intl.DateTimeFormat('default', {hour: "numeric", minute: "numeric", second: "numeric", hour12: false}).format(trackTime);
-    history.insertBefore(dt, history.firstChild);
+    new Promise((resolve, _reject) => {
+      const history = document.getElementById("history")!;
+      const dd = document.createElement("dd");
+      dd.innerText = `${track.artist} - ${track.title}`;
+      history.insertBefore(dd, history.firstChild);
+      const dt = document.createElement("dt");
+      const trackTime = new Date(track.playbackStartUnixMillis);
+      dt.innerText = new Intl.DateTimeFormat('default', {hour: "numeric", minute: "numeric", second: "numeric", hour12: false}).format(trackTime);
+      history.insertBefore(dt, history.firstChild);
+      resolve(null);
+    });
     document.getElementById("playerHeadline")!.innerText = `${track.artist} - ${track.title}`;
     for (const someSource of track.sources) {
       if (someSource.module == "youtube") {
