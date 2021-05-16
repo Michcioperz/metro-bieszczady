@@ -1,6 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i python3 -p "python3.withPackages(ps: [ps.paho-mqtt])"
 import json
+import os
 import paho.mqtt.publish
 import random
 import time
@@ -25,6 +26,6 @@ while True:
         }],
     }
     print(now, item)
-    paho.mqtt.publish.single("metro-bieszczady/tracks", json.dumps(item), retain=True, hostname="192.168.2.1")
+    paho.mqtt.publish.single("metro-bieszczady/tracks", json.dumps(item), retain=True, hostname="mqtt.koguma.iscute.ovh", port=443, tls={}, transport="websockets", auth={"username":"metrobieszczady","password":os.environ["MQTT_PASSWORD"]})
     time.sleep(endSeconds - startSeconds)
     now += (endSeconds - startSeconds) * 1000
