@@ -1,0 +1,50 @@
+html, body {
+  background-color: darkslateblue;
+  color: white;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+#container {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-gap: 1rem;
+  grid-template-areas: "logo logo" "player title" "side history" "footer footer";
+  grid-template-rows: min-content min-content 1fr min-content;
+  grid-template-columns: min-content 1fr;
+}
+
+#container > * {
+  margin: 1rem;
+}
+
+#logo {
+  grid-area: logo;
+}
+
+#logo, footer {
+  text-align: right;
+}
+
+a:link, a:visited {
+  color: white;
+}
+
+#player {
+  grid-area: player;
+}
+
+#playerTitle {
+  grid-area: title;
+}
+
+#history {
+  grid-area: history;
+  overflow-y: hidden;
+}
+
+footer {
+  grid-area: footer;
+}

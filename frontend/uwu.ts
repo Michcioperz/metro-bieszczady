@@ -3,9 +3,6 @@ class Track {
   title!: string;
   sources!: Source[];
   playbackStartUnixMillis!: number;
-  playbackStartTime(): Date {
-    return new Date(this.playbackStartUnixMillis);
-  }
 }
 
 interface Source {
@@ -23,7 +20,6 @@ class Metro {
   rain!: HTMLAudioElement;
   player!: YT.Player;
   client!: Paho.MQTT.Client;
-  history: Track[] = [];
   readyTime!: Date;
   
   constructor() {
@@ -55,7 +51,14 @@ class Metro {
   }
 
   enqueue(track: Track): void {
-    this.history.push(track);
+    const history = document.getElementById("history")!;
+    const dd = document.createElement("dd");
+    dd.innerText = `${track.artist} - ${track.title}`;
+    history.insertBefore(dd, history.firstChild);
+    const dt = document.createElement("dt");
+    const trackTime = new Date(track.playbackStartUnixMillis);
+    dt.innerText = new Intl.DateTimeFormat('default', {hour: "numeric", minute: "numeric", second: "numeric", hour12: false}).format(trackTime);
+    history.insertBefore(dt, history.firstChild);
     document.getElementById("playerHeadline")!.innerText = `${track.artist} - ${track.title}`;
     for (const someSource of track.sources) {
       if (someSource.module == "youtube") {
@@ -83,12 +86,10 @@ class Metro {
 
   onMessageArrived(message: Paho.MQTT.Message): void {
     const payload: Track = JSON.parse(message.payloadString);
-    console.log(payload);
     this.enqueue(payload);
   }
 
   onMqttConnect(): void {
-    console.log("mqtt connected");
     this.client.subscribe("metro-bieszczady/tracks");
   }
 }

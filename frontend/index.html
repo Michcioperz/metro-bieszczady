@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
+    <meta charset="UTF-8">
+    <title>Metro Bieszczady</title>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
     <script defer src="https://www.youtube.com/iframe_api"></script>
     <script defer src="uwu.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="player"></div><h1 id="playerHeadline"></h1>
+    <div id="container">
+      <header id="logo">
+        <h1>Metro Bieszczady</h1>
+        <p>Stacja Techniczno-Postojowa(-w-deszczu)</p>
+      </header>
+      <div id="player"></div>
+      <marquee id="playerTitle">Teraz gramy: <h2 id="playerHeadline"></h2></marquee>
+      <dl id="history"></dl>
+      <footer>
+        <a href="https://github.com/metro-bieszczady">source code (incl. playlist)</a>
+      </footer>
+    </div>
   </body>
 </html>
