@@ -33,7 +33,7 @@ while True:
         json.dumps(item),
         retain=True,
         hostname=os.environ["MQTT_HOST"],
-        port=os.environ["MQTT_PORT"],
+        port=int(os.environ["MQTT_PORT"]),
         tls={} if "MQTT_TLS" in os.environ else None,
         transport=os.environ["MQTT_TRANSPORT"],
         auth={
