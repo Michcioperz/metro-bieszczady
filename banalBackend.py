@@ -18,14 +18,28 @@ while True:
         "artist": track["artist"],
         "title": track["title"],
         "playbackStartUnixMillis": now,
-        "sources": [{
-            "module": "youtube",
-            "videoId": track["youtubeId"],
-            "startSeconds": startSeconds,
-            "endSeconds": endSeconds,
-        }],
+        "sources": [
+            {
+                "module": "youtube",
+                "videoId": track["youtubeId"],
+                "startSeconds": startSeconds,
+                "endSeconds": endSeconds,
+            }
+        ],
     }
     print(now, item)
-    paho.mqtt.publish.single("metro-bieszczady/tracks", json.dumps(item), retain=True, hostname="mqtt.koguma.iscute.ovh", port=443, tls={}, transport="websockets", auth={"username":"metrobieszczady","password":os.environ["MQTT_PASSWORD"]})
+    paho.mqtt.publish.single(
+        "metro-bieszczady/tracks",
+        json.dumps(item),
+        retain=True,
+        hostname=os.environ["MQTT_HOST"],
+        port=os.environ["MQTT_PORT"],
+        tls={} if "MQTT_TLS" in os.environ else None,
+        transport=os.environ["MQTT_TRANSPORT"],
+        auth={
+            "username": os.environ["MQTT_USER"],
+            "password": os.environ["MQTT_PASSWORD"],
+        },
+    )
     time.sleep(endSeconds - startSeconds)
     now += (endSeconds - startSeconds) * 1000
