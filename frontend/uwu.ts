@@ -38,7 +38,7 @@ class Metro {
     this.readyTime = new Date();
     this.client = new Paho.MQTT.Client("wss://mqtt.koguma.iscute.ovh/mqtt", "metro-bieszczady");
     this.client.onMessageArrived = this.onMessageArrived.bind(this);
-    this.client.connect({onSuccess: this.onMqttConnect.bind(this), userName: "public", password: "public", keepAliveInterval: 600});
+    this.client.connect({onSuccess: this.onMqttConnect.bind(this), userName: "public", password: "public", keepAliveInterval: 25});
   }
 
   createPlayer(): void {
